@@ -1,46 +1,28 @@
 import css from "./App.module.css";
 import ContactForm from "../ContactForm/ContactForm";
-import SearchBox from "../SearchBox/SearchBox";
+// import SearchBox from "../SearchBox/SearchBox";
 import ContactList from "../ContactList/ContactList";
 // import initialData from '../../data/data.json'
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchContacts } from "../../redux/contactsOps";
+import Error from "../Error/Error";
+import Loader from "../Loader/Loader";
 export default function App() {
-  const [data, setData] = useState(() => {
-    const saveData = window.localStorage.getItem("saved-data");
-    if (saveData !== null) {
-      return JSON.parse(saveData);
-    }
-    return [
-      { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-      { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-      { id: "id-3", name: "Eden Clements", number: "645-17-79" },
-      { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
-    ];
-  });
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.contacts.loading);
+  const isError = useSelector((state) => state.contacts.error);
   useEffect(() => {
-    window.localStorage.setItem("saved-data", JSON.stringify(data));
-  }, [data]);
-  const [filter, setFilter] = useState("");
-  const addData = (newData) => {
-    setData((prevData) => {
-      return [...prevData, newData];
-    });
-  };
-  const deleteData = (dataId) => {
-    setData((prevData) => {
-      return prevData.filter((data) => data.id !== dataId);
-    });
-  };
-  const visibleData = data.filter((item) =>
-    item.name.toLowerCase().includes(filter.toLowerCase())
-  );
-
+    dispatch(fetchContacts());
+  }, [dispatch]);
   return (
     <div className={css.div}>
       <h1 className={css.title}>Phonebook</h1>
-      <ContactForm onAdd={addData} />
-      <SearchBox data={filter} onFilter={setFilter} />
-      <ContactList data={visibleData} onDelete={deleteData} />
+      <ContactForm />
+      {isLoading && <Loader>Loading message</Loader>}
+      {isError && <Error>Error message</Error>}
+      {/* <SearchBox data={filter} onFilter={setFilter} /> */}
+      <ContactList />
     </div>
   );
 }
