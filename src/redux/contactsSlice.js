@@ -42,35 +42,10 @@ const slice = createSlice({
       });
   },
 });
-export const selectTasks = (state) => state.tasks.items;
+export const selectTasks = (state) => state.contacts.items;
 
-export const selectLoading = (state) => state.tasks.loading;
+export const selectLoading = (state) => state.contacts.loading;
 
-export const selectError = (state) => state.tasks.error;
-
-// export const selectVisibleTasks = createSelector(
-//   [selectTasks, selectTextFilter],
-//   (tasks, textFilter) => {
-//     // console.log("selectVisibleTasks", tasks);
-//     return tasks.filter((task) =>
-//       task.text.toLowerCase().includes(textFilter.toLowerCase())
-//     );
-//   }
-// );
-
-// export const selectContacts = state => state.tasks.items;
-
-// export const selectLoading = state => state.tasks.loading;
-
-// export const selectError = state => state.tasks.error;
-
-// export const selectVisibleTasks = state => {
-//   const tasks = selectTasks(state);
-//   const textFilter = selectTextFilter(state);
-
-//   return tasks.filter(task =>
-//     task.text.toLowerCase().includes(textFilter.toLowerCase())
-//   );
-// };
-
+export const selectError = (state) => state.contacts.error;
+export const selectVisibleContacts = (state) => state.contacts.items;
 export default slice.reducer;

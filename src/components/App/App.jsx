@@ -1,17 +1,17 @@
 import css from "./App.module.css";
 import ContactForm from "../ContactForm/ContactForm";
-// import SearchBox from "../SearchBox/SearchBox";
+import SearchBox from "../SearchBox/SearchBox";
 import ContactList from "../ContactList/ContactList";
-// import initialData from '../../data/data.json'
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContacts } from "../../redux/contactsOps";
 import Error from "../Error/Error";
 import Loader from "../Loader/Loader";
+import { selectError, selectLoading } from "../../redux/contactsSlice";
 export default function App() {
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.contacts.loading);
-  const isError = useSelector((state) => state.contacts.error);
+  const isLoading = useSelector(selectLoading);
+  const isError = useSelector(selectError);
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
@@ -21,7 +21,7 @@ export default function App() {
       <ContactForm />
       {isLoading && <Loader>Loading message</Loader>}
       {isError && <Error>Error message</Error>}
-      {/* <SearchBox data={filter} onFilter={setFilter} /> */}
+      <SearchBox />
       <ContactList />
     </div>
   );
