@@ -8,11 +8,7 @@ export default function ContactList() {
     <ul className={css.ul}>
       {contacts.map((contact) => (
         <li className={css.li} key={contact.id}>
-          <Contact
-            // id={contact.id}
-            name={contact.name}
-            number={contact.number}
-          />
+          <Contact contact={contact} />
         </li>
       ))}
     </ul>

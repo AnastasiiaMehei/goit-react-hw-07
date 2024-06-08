@@ -4,7 +4,9 @@
   padding: 15px;
   width: 500px;
   height: 100%;
+  margin-bottom: 30px;
 }
+
 .div {
   display: flex;
   flex-direction: column;
